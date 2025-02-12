@@ -1,11 +1,11 @@
 name: Build
+
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+
 jobs:
-  build-page:
+  build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -18,19 +18,21 @@ jobs:
         run: |
           npm install
           npx vite build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          name: dist
           path: dist
 
-      - run: cp ./vercel.json ./dist
-      - uses: amondnet/vercel-action@v25
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: '--prod'
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: ./dist
+  deploy:
+    runs-on: ubuntu-22.04
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 

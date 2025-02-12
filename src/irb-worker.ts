@@ -42,22 +42,7 @@ export class IRB {
             "irb.wasm", "-e_=0", "-EUTF-8", "-I/gems/lib"
         ];
         termWriter.set_prompt("");
-        termWriter.write("$ #\r\n");
-        termWriter.write("$ #\r\n");
-        termWriter.write("$ #\r\n");
-        termWriter.write("$ # \x1B[32;1m irb.wasm - IRB on WebAssembly\x1B[m\r\n");
-        termWriter.write("$ #\r\n");
-        termWriter.write("$ #\r\n");
-        termWriter.write("$ #\r\n");
-        termWriter.write("$ # Source code is available at https://github.com/kateinoigakukun/irb.wasm\r\n");
-        termWriter.write("$ cat EXAMPLES.rb \r\n");
-        termWriter.write(" \r\n");
-        termWriter.write("puts \"Hello, world!\"\r\n");
-        termWriter.write(" \r\n");
-        termWriter.write(`RubyVM::AbstractSyntaxTree.parse("puts :hello")\r\n`)
-        termWriter.write(" \r\n");
-        termWriter.write("require \"prism\"\r\n");
-        termWriter.write(`Prism.parse("puts :hello")\r\n`);
+        termWriter.write("# Hello, try: puts \"Hello, STORES\"\r\n");
         termWriter.write(" \r\n");
 
         let homeContents: Map<string, Fd>;
@@ -104,10 +89,6 @@ export class IRB {
         wasi.initialize(instance as any);
         (instance.exports._initialize as Function)();
         vm.initialize(args);
-
-        termWriter.write("$ ruby --version\r\n");
-        vm.printVersion();
-        termWriter.write("$ " + args.join(" ") + "\r\n");
 
         this.instance = instance;
         this.wasi = wasi
