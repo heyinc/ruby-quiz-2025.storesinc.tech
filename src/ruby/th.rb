@@ -1,5 +1,6 @@
 require "irb"
 
+require "base64"
 require "digest"
 require "singleton"
 
@@ -66,7 +67,7 @@ class TreasureHunt
         if arg.chomp == "--more"
           case TreasureHunt.instance.hint_count % 2
           when 0
-            puts "`cd #{font :link, "River"}` move IRB context into #{font :link, "River"} class."
+            puts "`cd #{font :link, "River"}` move IRB workspace into #{font :link, "River"} class."
           when 1
             puts "`ls #{font :link, "River"}` shows #{font :link, "River"} class internal."
           end
@@ -92,6 +93,7 @@ class TreasureHunt
     e203aef6f792772055446a6ff66568e9c8f42d6b3106131ab4a37366fc10b540
     2b9ce33a393394d9e7a57674727a80210015de9616c679a6b8120078754a4aa4
     692e7d1ce99f2e11c6ae93328676bb561610377bc6c4b5c27ccf5922abf2e2ef
+    a13fdfad17025bca589e1df8e6659758f547ae08b9d2785defd2d22520baf444
   ]
 
   attr_accessor :hint_count
@@ -195,6 +197,10 @@ class River
       @hooks[event_type].each do |hook|
         hook.call
       end
+    end
+
+    def encoded
+      font(:yellow, "You found a encoded treasure: UkktRU5DT0RFRA==")
     end
   end
 end
