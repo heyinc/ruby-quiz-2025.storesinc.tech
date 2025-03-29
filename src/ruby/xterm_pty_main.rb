@@ -127,15 +127,6 @@ module IRB
   end
 end
 
-p = method(:puts)
-Kernel.define_method(:puts) do |s, *a|
-  p.call("\e[33mYou found a treasure!: ST-HELLO\e[m") if s == "Hello, STORES"
-  p.call(s, *a)
-end
-
-STORES = "\e[33mYou found a treasure!: ST-CONST\e[m"
-@stores = "\e[33mYou found a treasure!: ST-IVAR\e[m"
-
 # Run irb
 IRB.setup(nil, argv: ['--no-pager'])
 IRB::Irb.new.run

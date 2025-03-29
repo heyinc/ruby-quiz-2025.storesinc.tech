@@ -3,6 +3,8 @@ import { Term } from "./terminals/terminal";
 import { Directory, File, OpenFile, PreopenDirectory, WASI, strace } from "@bjorn3/browser_wasi_shim";
 import { Fd, OpenSyncOPFSFile, SyncOPFSFile } from "@bjorn3/browser_wasi_shim/typings";
 
+import th_rb from "./ruby/th.rb?url";
+
 export type RubyVersion = {
     version: string,
     url: string,
@@ -42,8 +44,6 @@ export class IRB {
             "irb.wasm", "-e_=0", "-EUTF-8", "-I/gems/lib"
         ];
         termWriter.set_prompt("");
-        termWriter.write("# Hello, try: puts \"Hello, STORES\"\r\n");
-        termWriter.write(" \r\n");
 
         let homeContents: Map<string, Fd>;
         try {
@@ -96,13 +96,15 @@ export class IRB {
         this.homeDir = homeDir;
     }
 
-    start() {
+    async start() {
         this.vm.eval(`require "/bundle/setup"`)
         this.vm.eval(`
             # Hack to ignore "require 'io/console'" and "require 'io/wait'"
             $LOADED_FEATURES << "io/console" << "io/wait" << "socket"
             Gem::Specification.find_by_name("reline").dependencies.clear
         `)
+        const thCode = await fetch(th_rb);
+        this.vm.eval(await thCode.text());
         this.term.startIRB(this.vm);
     }
 
