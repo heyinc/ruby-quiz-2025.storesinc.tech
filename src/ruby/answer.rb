@@ -9,6 +9,7 @@ ANSWERS = %w[
   RI-STONE
   RI-ENCODED
   ML-GOOD
+  DT-FIXME
 ]
 
 puts "Answers:"

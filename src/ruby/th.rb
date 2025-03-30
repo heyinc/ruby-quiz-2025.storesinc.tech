@@ -65,10 +65,15 @@ class TreasureHunt
         TreasureHunt.instance.hint_count += 1
 
         if arg.chomp == "--more"
-          case TreasureHunt.instance.hint_count % 2
+          case TreasureHunt.instance.hint_count % 3
           when 0
-            puts "`cd #{font :link, "River"}` move IRB workspace into #{font :link, "River"} class."
+            puts <<~EOM
+              #{font(:link, "TreasureDetector")}#{bold ".nop"} is not implemented.
+              You can define it in IRB.
+            EOM
           when 1
+            puts "`cd #{font :link, "River"}` move IRB workspace into #{font :link, "River"} class."
+          when 2
             puts "`ls #{font :link, "River"}` shows #{font :link, "River"} class internal."
           end
         else
@@ -85,6 +90,19 @@ class TreasureHunt
         end
       end
     end
+
+    class Detector < ThCommand
+      category "TreasureHunt"
+      description "Treasure detector."
+
+      def execute(arg)
+        if arg.chomp == "--use"
+          puts TreasureDetector.new.use
+        else
+          puts "You can find treasure by #{bold "th-detector"} command: th-detector --use"
+        end
+      end
+    end
   end
 
   TREASURE_DIGESTS = %w[
@@ -95,6 +113,7 @@ class TreasureHunt
     692e7d1ce99f2e11c6ae93328676bb561610377bc6c4b5c27ccf5922abf2e2ef
     a13fdfad17025bca589e1df8e6659758f547ae08b9d2785defd2d22520baf444
     40d5a8cebc645c340df2a0d4ac62c0ad1dd0b3d9a9aa61e14a55b56ed7d7a5e6
+    02decd2dfce70d2e0cf81bd753582c8d8a94c4a8c1b7297949e38dc5280e1b46
   ]
 
   attr_accessor :hint_count
@@ -158,6 +177,7 @@ end
 IRB::Command.register("th", TreasureHunt::IrbCommand::Th)
 IRB::Command.register("th-capture", TreasureHunt::IrbCommand::Capture)
 IRB::Command.register("th-hint", TreasureHunt::IrbCommand::Hint)
+IRB::Command.register("th-detector", TreasureHunt::IrbCommand::Detector)
 
 # Initialize TreasureHunt
 TreasureHunt.instance
@@ -214,6 +234,8 @@ class River
   end
 end
 
+River.register(:explore, -> { puts font(:yellow, "You found a treasure!: RI-STONE") })
+
 class Tablet
   class << self
     def read
@@ -249,6 +271,18 @@ class Tablet
   end
 end
 
-River.register(:explore, -> { puts font(:yellow, "You found a treasure!: RI-STONE") })
+class TreasureDetector
+  def self.hint
+    puts <<~EOM
+      #{font(:link, "TreasureDetector")}#{bold ".nop"} is not implemented.
+      You can define it in IRB.
+    EOM
+  end
+
+  def use
+    nop
+    puts "You got a treasure! #{bold "DT-FIXME"}"
+  end
+end
 
 IRB.start if __FILE__ == $0
