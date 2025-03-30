@@ -180,7 +180,7 @@ STORES = font(:yellow, "You found a treasure!: ST-CONST")
 class River
   class << self
     def treasure
-      font(:yellow, "You found a treasure!: RI-CLASS")
+      puts font(:yellow, "You found a treasure!: RI-CLASS")
     end
 
     def hooks
@@ -219,8 +219,8 @@ class Tablet
     def read
       puts <<~EOM
         The tablet says:
-        You can get the treasure by running program #{bold "+z+z+7.1-1.1-v.1+q.1+8.2-b.1"}.
-        To learn how to run it, call #{font(:link, "Tablet")}#{bold ".interpreter"}.
+        You can get the treasure by running program: #{bold "+z+z+7.1-1.1-v.1+q.1+8.2-b.1"}.
+        To learn how to run it, read #{font(:link, "Tablet")}#{bold ".interpreter"}
       EOM
     end
 
