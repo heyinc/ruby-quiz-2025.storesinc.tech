@@ -94,6 +94,7 @@ class TreasureHunt
     2b9ce33a393394d9e7a57674727a80210015de9616c679a6b8120078754a4aa4
     692e7d1ce99f2e11c6ae93328676bb561610377bc6c4b5c27ccf5922abf2e2ef
     a13fdfad17025bca589e1df8e6659758f547ae08b9d2785defd2d22520baf444
+    40d5a8cebc645c340df2a0d4ac62c0ad1dd0b3d9a9aa61e14a55b56ed7d7a5e6
   ]
 
   attr_accessor :hint_count
@@ -200,7 +201,50 @@ class River
     end
 
     def encoded
-      font(:yellow, "You found a encoded treasure: UkktRU5DT0RFRA==")
+      puts font(:yellow, "You found a encoded treasure: UkktRU5DT0RFRA==")
+    end
+
+    def bottom
+      puts <<~EOM
+        A stone #{font(:link, "Tablet")} is at the bottom of the river.
+        It has some writing on it.
+        Let's call #{font(:link, "Tablet.read")}.
+      EOM
+    end
+  end
+end
+
+class Tablet
+  class << self
+    def read
+      puts <<~EOM
+        The tablet says:
+        You can get the treasure by running program #{bold "+z+z+7.1-1.1-v.1+q.1+8.2-b.1"}.
+        To learn how to run it, call #{font(:link, "Tablet")}#{bold ".interpreter"}.
+      EOM
+    end
+
+    def interpreter
+      puts <<~EOM
+        The interpreter could run programs like these.
+
+        #{bold "Interpreter:"}
+        - Interpreter has a single memory
+        - At first, the memory is 0
+        - The interpreter reads the program from left to right
+
+        #{bold "Instruction:"}
+        - Each instruction is 2 characters long
+        - The first character is an operator
+          - #{bold "+"}: memory += n
+          - #{bold "-"}: memory -= n
+          - #{bold "."}: print memory.chr n times
+        - The second character is a number
+          - Numbers are in base 36 (0-9, a-z)
+
+        #{bold "Example:"}
+        - +z+z+2.1-3.1+7.2+3.1 => HELLO
+      EOM
     end
   end
 end
