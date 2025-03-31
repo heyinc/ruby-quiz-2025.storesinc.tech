@@ -1,19 +1,19 @@
 {
   "name": "cruby-web-irb",
   "dependencies": {
-    "@bjorn3/browser_wasi_shim": "^0.3.0",
+    "@bjorn3/browser_wasi_shim": "^0.4.1",
     "@ruby/3.4-wasm-wasi": "^2.7.1",
-    "@ruby/wasm-wasi": "2.6.2-2024-09-05-a",
+    "@ruby/wasm-wasi": "^2.7.1",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/addon-web-links": "^0.11.0",
     "@xterm/xterm": "^5.3.0",
     "jquery.terminal": "^2.31.1",
-    "xterm-pty": "^0.10.1"
+    "xterm-pty": "^0.11.1"
   },
   "devDependencies": {
     "buffer": "^6.0.3",
     "process": "^0.11.10",
-    "vite": "^5.4.12"
+    "vite": "^6.2.4"
   },
   "scripts": {
     "dev": "vite",
