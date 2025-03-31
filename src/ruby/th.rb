@@ -1,4 +1,5 @@
 require "irb"
+require "irb/context"
 
 require "base64"
 require "digest"
@@ -16,6 +17,10 @@ end
 
 def bold(text)
   font :bold, text
+end
+
+def wasm?
+  RUBY_PLATFORM.start_with?("wasm")
 end
 
 class TreasureHunt
@@ -141,10 +146,6 @@ class TreasureHunt
     EOM
   end
 
-  def wasm?
-    RUBY_PLATFORM.start_with?("wasm")
-  end
-
   def save!
     if wasm?
       JS.global[:localStorage].setItem("treasures", @treasures.join(","))
@@ -200,7 +201,7 @@ STORES = font(:yellow, "You found a treasure!: ST-CONST")
 class River
   class << self
     def treasure
-      puts font(:yellow, "You found a treasure!: RI-CLASS")
+      font(:yellow, "You found a treasure!: RI-CLASS")
     end
 
     def hooks
@@ -221,11 +222,11 @@ class River
     end
 
     def encoded
-      puts font(:yellow, "You found a encoded treasure: UkktRU5DT0RFRA==")
+      font(:yellow, "You found a encoded treasure: UkktRU5DT0RFRA==")
     end
 
     def bottom
-      puts <<~EOM
+      <<~EOM
         A stone #{font(:link, "Tablet")} is at the bottom of the river.
         It has some writing on it.
         Let's call #{font(:link, "Tablet.read")}.
@@ -284,5 +285,21 @@ class TreasureDetector
     puts "You got a treasure! #{bold "DT-FIXME"}"
   end
 end
+
+irbrc = wasm? ? "#{ENV["HOME"]}/.irbrc" : ".irbrc"
+
+File.write(irbrc, <<~RUBY)
+  require "irb/color_printer"
+  IRB::Inspector.def_inspector([:th]) do |v|
+    output = StringIO.new
+    if v.to_s.include?("\e")
+      output.print(v.to_s)
+    else
+      IRB::ColorPrinter.pp(v, output)
+    end
+    output.string.chomp
+  end
+  IRB.conf[:INSPECT_MODE] = :th
+RUBY
 
 IRB.start if __FILE__ == $0
