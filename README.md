@@ -11,5 +11,5 @@ https://user-images.githubusercontent.com/8454208/204725289-fefe41e3-476b-4618-a
 
 ```console
 $ npm install
-$ npx vite
+$ npm run dev
 ```
