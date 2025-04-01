@@ -131,7 +131,7 @@ class TreasureHunt
     @hint_count = 0
     puts <<~EOM
       Welcome to TreasureHunt game on IRB.
-      You can use many IRB features for explorering treasure.
+      You can use many IRB features for exploring treasure.
 
       There are many useful IRB commands:
         #{bold "help"} Shows IRB commands.
