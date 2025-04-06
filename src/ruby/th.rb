@@ -8,6 +8,7 @@ require "singleton"
 FONT_STYLE = {
   bold: "1",
   yellow: "33",
+  red: "31",
   link: "1;4;34",
 }
 
@@ -155,6 +156,7 @@ class TreasureHunt
     40d5a8cebc645c340df2a0d4ac62c0ad1dd0b3d9a9aa61e14a55b56ed7d7a5e6
     02decd2dfce70d2e0cf81bd753582c8d8a94c4a8c1b7297949e38dc5280e1b46
     f0d7142453d858524468066d46ccbe9db7292e87cb06cfab3ff6422fc6bbb082
+    f7f9e259a5f212e12a69de3f38094aaf0179663f77e024acedbea7c2f224ce00
   ]
 
   attr_accessor :hint_count
@@ -271,6 +273,33 @@ class River
 end
 
 class Tablet
+  class ReverseSide
+    class << self
+      def read
+        puts <<~EOM
+          The reverse side of the tablet says:
+          There is in the #{font :link, "Tablet"}::#{font :link, "ReverseSide"}.sentence.
+          Use the tool #{font :red, '/\w\W(?<treasure>\w{2}-(?<e>\p{Emoji})\W\k<e>)/'} to find it.
+        EOM
+      end
+
+      def sentence
+        <<~EOM
+          📀TOI🍵🧪KSLM🛢🍉R🧸🎮M🦉M🧫S-🎒💿️🔩ZO🔗I🎨🍣🔋FA📂🔩FJL🥷PRA🧭G🧪🍩W📚N🪄C🔋️ORX️ 🧪🔦NQSJA🔑🐉🧊EL🧪TY️ WQ️ 🧃🗺📫--🐧SV🪅🐧RF🚨OI🔨PB💿🔧‍Y📡️🛹ZN🧩DT️🧊L👾ZOJ🦾🍰D🍵XY-️ 📷WCA🗿️
+          KY💎X🌋DJO🛎FG-🗿🧃🔦PERQ🍓⚡📓🌇MBK🌅🌸🪅IHIXPYT🕹🧃F🌰🏝I⚡🔦KQ🐠️WA📷🌈🎨💿🦖🦊🔗📌G🚨AJ🔩M🎟️ D🔦R🦊U🛸🪅️W🥟QK♂🐾🗓J🪄R🗓🧤📓JIK🧱XM🧊🍰🧵E🛠🧊YRAG🍜JNKTIDJ🍉🛰R️ HV🧃TX📷N🍩BO🎨🎼🐲
+          G🪓UXR🌈🧼-🧭P-H🪄🍩🛹🧙🧊-A🧤📦🔋🌅🪁️🧬XXX🎳🗺E🔨🔦L🧙N🎯🧃🦖️🪓🧱🥽💿👾🧱🗿R🍉WQB🧯🐾️🧸🍙E🛠N🦋O🧊EAV💿🍀🍜🎨🔨RRN🦊-K🍀TSM🗺️ 🎲⚡EO🌙C🍉🪓N🗺YZUYQ🧱🛎🧀️I🎼SLE-NG-I📓🛢🔬-JHMP-🪅️-QYK
+          🕹TFX️ 💡🦊️🔨🚨🍓🧩🍩C🗿A📦S🔩🌠🍰🕹HN-RE📫K🧪🍰🌈V📉-🍙W📻Q📀YM🐲KX💎X🎂🦴📫🐉🧠HM🍩O🔥️🔧🎨PRL🍓🗜IL🐧WNT🚨HNYYZ️ 🛠L🛢📡🧃🎂WLYCOI🪓H️ 📈F🚨GY🌸️XL🛸🕹🪁U🌅🍓M🕹🧊X🍰🧫RG🗿🥟🧪📀✨🎯🔩Y🦅CE🗓
+          🌠IZOAIV📮C-EC🧸WB👾H-🎒🪅🧱🧸F🦴A🔗WE️ F️ 🎼️🛰-📉🦴GJ🔍📜🗺HA🌰👣O🧵O🐠♂️🐠 -📦C✨TP🗺🌇PYCL💡🌈YD🧭G🌠V️ G🍇🔗🛢🧤🔥B🥷UJ🧊Z📷RE-🐾💎🐾HK🎨👾🐉📌A🧬📜P️ WT🔧🌈🧃DJV🎁🪁📻N🧤️Z🐢🍓🍀R💿🧃🌌🧩🪐🍓R
+          R📌🐉X🧩📡YD-🦾🎁🌋🛰📫AWDE🐧🧫🧃💎AJ🌅S📦📮🦴♂NV️ NQ📡🔨SR🛠U🗜️ DG️ L🦉XX🧼🦖L️ 🧫JB🗺VE🐧C🔗🌰E🔥🗓🎤🌇I💎🧼H🍰DRI🐉G🪁SC🧊ER️ 🧙⚡V🎤P🔍️P🐬🧪🧸📼📌UYM🎯️🔧-🧪KZ-🌸I--🕹📻🎨ET🗜EQ🦾H🧃🎂👾🌋
+          -🧠O🔑🧱📻✨NQ🥟JP-🐢️PL💡V⚡🐧B🥷📋🧃🛢A♂️ C🪅ZY-💎XTQ🐾P📮♂🧭🔗📻BNHV🚀J🦉R🌈🧫R🍓-🔗P🦴🧙️J🦾🍛🛰🌌🧊L📌NG🔨G️ 🪄Q🧬BD🎲🔨Z-🧃-📌JM-F👣-🎟🧤🥟UXJQVAIB🦴N🍣O🎁🧠🧱🎧GYUKM🦉X-📋⚡S🎟🔑F🔬
+          🧃P🌈HL🎳O🌸DV️ 🔥🎲🔥BVTS🗜Q️ ED📡🔑BO📉D🔍📂🛎️ 🧫R📈🎁E🌸🦊CB🗓🧼F🐲🦴🔨🛠AVDP👾️🔦💡R🐢WAD🍣BQR🍩🧭PILK🦴F🛠🧊🪅💿V🌰LI🦊🎁📻KZR️ C️ 🚀V🔥️🪓🌋♂🦅️B📀T-📋🌈🕹BMD️ ZM🌇👣📓W️ I🧸🧙T-🎯SJ🎲🧵
+          🪤X🗓O🍀🗃🍣️🍰VX🌠🦾🧤H🌇🎟️ 📦🧃🔩️📡-HVGU💡CQU🚀📷🌠EMSK📈M📂🌸️🌋🚀N️ 🥟YUV🐾🍇📼W📚🔨🚨🔩📋🌠A🧼I🎒-🥷Q🧼🎧🌈QR🦋Q🌙️S🪁F🍀📻️🔥🧀🛢R️ 🐲X🌋FDS🧀️🍜🗺⚡RC🦴U🧊🗃FIIOZ🧊🌸XN🛹AN🛸🦋CZ️ G🍇📂📼🍣
+          🚨X️ RF🦖🎟X🧭RAV🧸XKFS🗿🎮🗿️OA-🎼📀GQ🦋🧭A🌅🔗RSO️ 🦉Z️ 🗓🌸👾N🎮BE🎳📼B🍰🍉P🧃🧊I🧙P🎳N🦾IFVPZ🧀👣-X🕹🔬AM🌈️🕹️ TR-🎤O🎂🧪📚-🗺AOG📉🌰🦾DSYPU🔑IW🎁II🎮🎧🚨️🎼OWP🐢🎂Z🗜️ Q🥽🎼HN-L-B🥟
+        EOM
+      end
+    end
+  end
+
   class << self
     def read
       puts <<~EOM

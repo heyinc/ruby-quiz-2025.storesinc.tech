@@ -11,6 +11,7 @@ ANSWERS = %w[
   ML-GOOD
   DT-FIXME
   ST-IRB
+  RE-🐾💎🐾
 ]
 
 puts "Answers:"
