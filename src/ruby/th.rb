@@ -35,10 +35,19 @@ class TreasureHunt
 
     class Th < ThCommand
       category "TreasureHunt"
-      description "Show your TreasureHunt status."
+      description "Show your TreasureHunt score."
 
       def execute(arg)
+        puts font(:bold, "YOUR SCORE")
         th.list_treasures
+
+        puts font(:bold, "\nTREASURE HUNT COMMANDS")
+        IRB::Command.commands.each do |name, command|
+          klass = command.first
+          next unless klass.category == "TreasureHunt"
+          padded_name = name.to_s.ljust(10)
+          puts "#{bold padded_name} - #{klass.description}"
+        end
       end
     end
 
@@ -66,8 +75,49 @@ class TreasureHunt
       category "TreasureHunt"
       description "Search for treasures in the world."
 
+      HINTS = [
+        <<~EOM,
+          You look around and notice a crumpled paper on the ground.
+          It reads: See #{bold "ls"} output...
+        EOM
+        <<~EOM,
+          You find a small note hidden under some leaves.
+          The note reads: This game provided by #{bold "______"}
+        EOM
+        <<~EOM,
+          You spot a worn sign on a stone.
+          The sign says: The treasure is in the #{ font :link, "River" }...
+        EOM
+        <<~EOM,
+          Near an archway, you see an instruction:
+          #{bold "ls River" } shows River class internal.
+        EOM
+        <<~EOM,
+          You notice a scribbled note on a wall:
+          #{font :link, "Base64" } is useful gem bundled in Ruby.
+        EOM
+        <<~EOM,
+          You found a big dial.
+          It looks like it can run in IRB.
+          The dial says:
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ;;;1111111;;;$iiiiiiii;;;;;;;;;1111e1111;;:iiiiii;;;;";;;;;";;;
+          ;111;;;;;;;;;;;$ii;;;;;;;;;;;;;;;1e1;;;;;:ii;;;:ii;;";";;;";";
+          ;;;1111111;;;;;;$ii;;;;;false;;;;;1e1;;;;;:iiiiii;;;;";;;;;";;;
+          ;;;;;;;;111;;;;;$ii;;;;;;;;;;;;;;;1e1;;;;;:ii;;;:ii;;";";;;";";
+          ;;;1111111;;;;;;$ii;;;;;;;;;;;;1111e1111;;:ii;;;:ii;;";;;;;";;;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        EOM
+        <<~EOM,
+          a
+        EOM
+        <<~EOM,
+          A small note at the side says: Try #{bold "th-search --more"}...
+        EOM
+      ]
+
       def execute(arg)
-        TreasureHunt.instance.hint_count += 1
+        print_searching
 
         if arg.chomp == "--more"
           print_searching
@@ -75,45 +125,12 @@ class TreasureHunt
             You found #{font(:link, "TreasureDetector")}!
             You can use it to find treasures.
           EOM
-        else
-          case TreasureHunt.instance.hint_count % 6
-          when 0
-            print_searching
-            puts <<~EOM
-              A small note at the side says: Try #{bold "th-search --more"}...
-            EOM
-          when 1
-            print_searching
-            puts <<~EOM
-              You look around and notice a crumpled paper on the ground.
-              It reads: See #{bold "ls"} output...
-            EOM
-          when 2
-            print_searching
-            puts <<~EOM
-              You find a small note hidden under some leaves.
-              The note reads: This game provided by #{bold "______"}
-            EOM
-          when 3
-            print_searching
-            puts <<~EOM
-              You spot a worn sign on a stone.
-              The sign says: The treasure is in the #{ font :link, "River" }...
-            EOM
-          when 4
-            print_searching
-            puts <<~EOM
-              Near an archway, you see an instruction:
-              #{bold "ls River" } shows River class internal.
-            EOM
-          when 5
-            print_searching
-            puts <<~EOM
-              You notice a scribbled note on a wall:
-              #{font :link, "Base64" } is useful gem bundled in Ruby.
-            EOM
-          end
+          return
         end
+
+        hint = HINTS[TreasureHunt.instance.hint_count % HINTS.size]
+        puts hint
+        TreasureHunt.instance.hint_count += 1
       end
 
       private
@@ -140,6 +157,7 @@ class TreasureHunt
     a13fdfad17025bca589e1df8e6659758f547ae08b9d2785defd2d22520baf444
     40d5a8cebc645c340df2a0d4ac62c0ad1dd0b3d9a9aa61e14a55b56ed7d7a5e6
     02decd2dfce70d2e0cf81bd753582c8d8a94c4a8c1b7297949e38dc5280e1b46
+    f0d7142453d858524468066d46ccbe9db7292e87cb06cfab3ff6422fc6bbb082
   ]
 
   attr_accessor :hint_count

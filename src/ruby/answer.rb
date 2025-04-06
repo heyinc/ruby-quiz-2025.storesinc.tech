@@ -10,6 +10,7 @@ ANSWERS = %w[
   RI-ENCODED
   ML-GOOD
   DT-FIXME
+  ST-IRB
 ]
 
 puts "Answers:"
