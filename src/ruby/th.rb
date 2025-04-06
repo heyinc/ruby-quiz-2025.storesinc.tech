@@ -202,6 +202,11 @@ class TreasureHunt
     end
   end
 
+  def reset!
+    @treasures = []
+    save!
+  end
+
   def list_treasures
     if treasures.size == 0
       puts "You have no treasures."
