@@ -35,7 +35,7 @@ class TreasureHunt
 
     class Th < ThCommand
       category "TreasureHunt"
-      description "Show your TreasureHunt score."
+      description "Show TreasureHunt score and commands."
 
       def execute(arg)
         puts font(:bold, "YOUR SCORE")
