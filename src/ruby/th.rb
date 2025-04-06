@@ -109,9 +109,6 @@ class TreasureHunt
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         EOM
         <<~EOM,
-          a
-        EOM
-        <<~EOM,
           A small note at the side says: Try #{bold "th-search --more"}...
         EOM
       ]
