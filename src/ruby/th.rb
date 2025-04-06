@@ -241,11 +241,7 @@ class River
       font(:yellow, "You found a treasure!: RI-CLASS")
     end
 
-    def hooks
-      @hooks
-    end
-
-    def register(event_type, hook)
+    private def register(event_type, hook)
       @hooks ||= {}
       @hooks[event_type] ||=  []
       @hooks[event_type] << hook
@@ -270,9 +266,9 @@ class River
       EOM
     end
   end
-end
 
-River.register(:explore, -> { puts font(:yellow, "You found a treasure!: RI-STONE") })
+  self.register(:explore, -> { puts font(:yellow, "You found a treasure!: RI-STONE") })
+end
 
 class Tablet
   class << self
