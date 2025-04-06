@@ -62,50 +62,71 @@ class TreasureHunt
       end
     end
 
-    class Hint < ThCommand
+    class Search < ThCommand
       category "TreasureHunt"
-      description "Show TreasureHunt hint."
+      description "Search for treasures in the world."
 
       def execute(arg)
         TreasureHunt.instance.hint_count += 1
 
         if arg.chomp == "--more"
-          case TreasureHunt.instance.hint_count % 3
+          print_searching
+          puts <<~EOM
+            You found #{font(:link, "TreasureDetector")}!
+            You can use it to find treasures.
+          EOM
+        else
+          case TreasureHunt.instance.hint_count % 6
           when 0
+            print_searching
             puts <<~EOM
-              #{font(:link, "TreasureDetector")}#{bold ".nop"} is not implemented.
-              You can define it in IRB.
+              A small note at the side says: Try #{bold "th-search --more"}...
             EOM
           when 1
-            puts "`cd #{font :link, "River"}` move IRB workspace into #{font :link, "River"} class."
+            print_searching
+            puts <<~EOM
+              You look around and notice a crumpled paper on the ground.
+              It reads: See #{bold "ls"} output...
+            EOM
           when 2
-            puts "`ls #{font :link, "River"}` shows #{font :link, "River"} class internal."
-          end
-        else
-          case TreasureHunt.instance.hint_count % 4
-          when 0
-            puts "#{bold "th-hint"} can use with --more option."
-          when 1
-            puts "See #{bold "ls"} output..."
-          when 2
-            puts "This game provided by #{bold "______"}."
+            print_searching
+            puts <<~EOM
+              You find a small note hidden under some leaves.
+              The note reads: This game provided by #{bold "______"}
+            EOM
           when 3
-            puts "The treasure is in the #{ font :link, "River" }..."
+            print_searching
+            puts <<~EOM
+              You spot a worn sign on a stone.
+              The sign says: The treasure is in the #{ font :link, "River" }...
+            EOM
+          when 4
+            print_searching
+            puts <<~EOM
+              Near an archway, you see an instruction:
+              #{bold "ls River" } shows River class internal.
+            EOM
+          when 5
+            print_searching
+            puts <<~EOM
+              You notice a scribbled note on a wall:
+              #{font :link, "Base64" } is useful gem bundled in Ruby.
+            EOM
           end
         end
       end
-    end
 
-    class Detector < ThCommand
-      category "TreasureHunt"
-      description "Treasure detector."
+      private
 
-      def execute(arg)
-        if arg.chomp == "--use"
-          puts TreasureDetector.new.use
-        else
-          puts "You can find treasure by #{bold "th-detector"} command: th-detector --use"
+      def print_searching
+        print "You search the area"
+        STDOUT.flush
+        3.times do
+          sleep 0.2
+          print "."
+          STDOUT.flush
         end
+        puts "\n\n"
       end
     end
   end
@@ -142,7 +163,7 @@ class TreasureHunt
       You could find some TreasureHunt commands with #{bold "help"} command.
       If you found treasure, please use #{bold "th-capture"} command: th-capture TREASURE-CODE
 
-      At first, try: puts \"Hello, STORES\"
+      #{ font :yellow, "At first, try" }: puts \"Hello, STORES\"
     EOM
   end
 
@@ -177,8 +198,7 @@ end
 
 IRB::Command.register("th", TreasureHunt::IrbCommand::Th)
 IRB::Command.register("th-capture", TreasureHunt::IrbCommand::Capture)
-IRB::Command.register("th-hint", TreasureHunt::IrbCommand::Hint)
-IRB::Command.register("th-detector", TreasureHunt::IrbCommand::Detector)
+IRB::Command.register("th-search", TreasureHunt::IrbCommand::Search)
 
 # Initialize TreasureHunt
 TreasureHunt.instance
@@ -186,11 +206,8 @@ TreasureHunt.instance
 puts_method = method(:puts)
 Kernel.define_method(:puts) do |*args|
   if args[0] == "Hello, STORES"
-    puts_method.call(font(:yellow, <<~EOM))
-      You found a treasure!: ST-HELLO
-
-      You can use th-capture command to capture this treasure: th-capture ST-HELLO
-    EOM
+    puts_method.call(font :yellow, "You found a treasure!: ST-HELLO\n")
+    puts_method.call("You can use th-capture command to capture this treasure: #{bold "th-capture ST-HELLO"}")
   end
   puts_method.call(*args)
 end
@@ -229,7 +246,7 @@ class River
       <<~EOM
         A stone #{font(:link, "Tablet")} is at the bottom of the river.
         It has some writing on it.
-        Let's call #{font(:link, "Tablet.read")}.
+        Let's call: #{font(:link, "Tablet.read")}.
       EOM
     end
   end
@@ -273,16 +290,20 @@ class Tablet
 end
 
 class TreasureDetector
-  def self.hint
-    puts <<~EOM
-      #{font(:link, "TreasureDetector")}#{bold ".nop"} is not implemented.
-      You can define it in IRB.
-    EOM
-  end
+  class << self
+    def hint
+      puts <<~EOM
+        #{font(:link, "TreasureDetector")}#{bold ".nop"} is not implemented.
+        Based on the method name, it seems nothing needs to be done.
 
-  def use
-    nop
-    puts "You got a treasure! #{bold "DT-FIXME"}"
+        You can define it in IRB.
+      EOM
+    end
+
+    def use
+      nop
+      puts font :yellow, "You got a treasure! DT-FIXME"
+    end
   end
 end
 
