@@ -146,6 +146,7 @@ class TreasureHunt
     end
   end
 
+  # Digest::SHA256.hexdigest(treasure)
   TREASURE_DIGESTS = %w[
     7866f0727e9b5017fd27ec70c9a53d767297ee29cc68772675480fa668639fce
     d8d8641046ae4c61c149f5d555c2b7de26b9bbb61414fb2c2fc2c7eaae3fd7f8
@@ -157,6 +158,7 @@ class TreasureHunt
     02decd2dfce70d2e0cf81bd753582c8d8a94c4a8c1b7297949e38dc5280e1b46
     f0d7142453d858524468066d46ccbe9db7292e87cb06cfab3ff6422fc6bbb082
     f7f9e259a5f212e12a69de3f38094aaf0179663f77e024acedbea7c2f224ce00
+    939ef55a8e99c91231e1de13a7438506f7a4a1c060c9e75252bf0ba825d7db94
   ]
 
   attr_accessor :hint_count

@@ -12,6 +12,7 @@ ANSWERS = %w[
   DT-FIXME
   ST-IRB
   RE-🐾💎🐾
+  IR-HISTORY
 ]
 
 puts "Answers:"

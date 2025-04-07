@@ -127,6 +127,8 @@ module IRB
   end
 end
 
+Reline::HISTORY << 'You found a treasure! IR-HISTORY'
+
 # Run irb
 IRB.setup(nil, argv: ['--no-pager'])
 IRB::Irb.new.run
