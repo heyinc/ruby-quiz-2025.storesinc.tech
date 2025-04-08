@@ -110,6 +110,10 @@ class TreasureHunt
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         EOM
         <<~EOM,
+          While you wander, you remember:
+          "The RubyKaigi 2025 opening #{font :link, "Keynote" } was fun!"
+        EOM
+        <<~EOM,
           A small note at the side says: Try #{bold "th-search --more"}...
         EOM
       ]
@@ -159,6 +163,7 @@ class TreasureHunt
     f0d7142453d858524468066d46ccbe9db7292e87cb06cfab3ff6422fc6bbb082
     f7f9e259a5f212e12a69de3f38094aaf0179663f77e024acedbea7c2f224ce00
     939ef55a8e99c91231e1de13a7438506f7a4a1c060c9e75252bf0ba825d7db94
+    a16071242afb8a9debadd51432e44ec310cceaadf4aac50d1bc7b73c89f82295
   ]
 
   attr_accessor :hint_count
@@ -352,6 +357,31 @@ class TreasureDetector
       puts font :yellow, "You got a treasure! DT-FIXME"
     end
   end
+end
+
+class Keynote
+  CP290_TABLE = Hash[*(
+    "\0\0\0\0\0\0\0\0\0\0\0\0\0\r\0\0" +
+    "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0" +
+    "\0\0\0\0\0\n\0\e\0\0\0\0\0\0\0\0" +
+    "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0" +
+    " ｡｢｣､･ｦｧｨｩ£.<(+|" +
+    "&ｪｫｬｭｮｯ\0ｰ\0!\\*);¬" +
+    "-/abcdefgh\0,%_>?" +
+    "[ijklmnop`:#@'=\"" +
+    "]ｱｲｳｴｵｶｷｸｹｺqｻｼｽｾ" +
+    "ｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉr\0ﾊﾋﾌ" +
+    "~‾ﾍﾎﾏﾐﾑﾒﾓﾔﾕsﾖﾗﾘﾙ" +
+    "^¢/tuvwxyzﾚﾛﾜﾝﾞﾟ" +
+    "{ABCDEFGHI\0\0\0\0\0\0" +
+    "}JKLMNOPQR\0\0\0\0\0\0" +
+    "$€STUVWXYZ\0\0\0\0\0\0" +
+    "0123456789\0\0\0\0\0\0"
+  ).each_char.map.with_index{|ch, i| [i, ch == "\0" ? nil : ch] }.flatten]
+
+  LOCATION = "/tmp/treasure.txt"
+
+  File.write(LOCATION, "'p\xF3\xF3u\xE8w\xB4@gw\xB4ve@b@\xB3\x9Bfb\xAB\xB4\x9BfZz@\xD2\xC5`\xC3\xD7\xF2\xF9\xF0'pu%%\xE6ftdwuf@\xB3w@\xC3\xD7\xF2\xF9\xF0@fvdweqvh@\xB6w\x9BteZ%\xC3\xD7\xF2\xF9\xF0@\x84\xBD\x8AX\x94\xBEH\xBD\x88\xBE\x9A@\x8F\x86\x82\xA2@\xAC\x83\x8A\x90Z%")
 end
 
 irbrc = wasm? ? "#{ENV["HOME"]}/.irbrc" : ".irbrc"

@@ -13,6 +13,7 @@ ANSWERS = %w[
   ST-IRB
   RE-🐾💎🐾
   IR-HISTORY
+  KE-CP290
 ]
 
 puts "Answers:"
@@ -59,3 +60,32 @@ puts "\nMLang results:"
   puts "#{code} => #{MLang.new(code).run}"
 end
 
+CP290_TABLE = Hash[*(
+  "\0\0\0\0\0\0\0\0\0\0\0\0\0\r\0\0" +
+  "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0" +
+  "\0\0\0\0\0\n\0\e\0\0\0\0\0\0\0\0" +
+  "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0" +
+  " ｡｢｣､･ｦｧｨｩ£.<(+|" + 
+  "&ｪｫｬｭｮｯ\0ｰ\0!\\*);¬" +
+  "-/abcdefgh\0,%_>?" +
+  "[ijklmnop`:#@'=\"" +
+  "]ｱｲｳｴｵｶｷｸｹｺqｻｼｽｾ" +
+  "ｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉr\0ﾊﾋﾌ" +
+  "~‾ﾍﾎﾏﾐﾑﾒﾓﾔﾕsﾖﾗﾘﾙ" +
+  "^¢/tuvwxyzﾚﾛﾜﾝﾞﾟ" +
+  "{ABCDEFGHI\0\0\0\0\0\0" +
+  "}JKLMNOPQR\0\0\0\0\0\0" +
+  "$€STUVWXYZ\0\0\0\0\0\0" +
+  "0123456789\0\0\0\0\0\0"
+).each_char.map.with_index{|ch, i| [i, ch == "\0" ? nil : ch] }.flatten]
+CP290_REVERSE_TABLE = CP290_TABLE.invert.select{ it }
+
+message = <<~EOM
+  \e[33mYou found a treasure!: KE-CP290\e[m
+
+  Welcome to CP290 encoding world!
+  CP290 ｴﾝｺｰﾃﾞｨﾝｸﾞﾉ ｾｶｲﾍ ﾖｳｺｿ!
+EOM
+
+puts message.inspect
+puts message.each_char.map{|ch| CP290_REVERSE_TABLE[ch]}.pack("C*").inspect
