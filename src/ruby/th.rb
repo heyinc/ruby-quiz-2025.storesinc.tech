@@ -379,7 +379,7 @@ class Keynote
     "0123456789\0\0\0\0\0\0"
   ).each_char.map.with_index{|ch, i| [i, ch == "\0" ? nil : ch] }.flatten]
 
-  LOCATION = "/tmp/treasure.txt"
+  LOCATION = wasm? ? "#{ENV["HOME"]}/treasure.txt" : "/tmp/treasure.txt"
 
   File.write(LOCATION, "'p\xF3\xF3u\xE8w\xB4@gw\xB4ve@b@\xB3\x9Bfb\xAB\xB4\x9BfZz@\xD2\xC5`\xC3\xD7\xF2\xF9\xF0'pu%%\xE6ftdwuf@\xB3w@\xC3\xD7\xF2\xF9\xF0@fvdweqvh@\xB6w\x9BteZ%\xC3\xD7\xF2\xF9\xF0@\x84\xBD\x8AX\x94\xBEH\xBD\x88\xBE\x9A@\x8F\x86\x82\xA2@\xAC\x83\x8A\x90Z%")
 end
