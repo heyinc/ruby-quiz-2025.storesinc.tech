@@ -179,7 +179,7 @@ class TreasureHunt
       Welcome to TreasureHunt game on IRB.
       You can use many IRB features for exploring treasure.
 
-      #{JS.global[:gameImage].to_s}
+      #{load_game_image}
 
       There are many useful IRB commands:
         #{bold "help"} Shows IRB commands.
@@ -234,6 +234,10 @@ class TreasureHunt
         EOM
       end
     end
+  end
+
+  def load_game_image
+    wasm? ? JS.global[:gameImage].to_s : File.read(File.join(File.dirname(__dir__), "images", "game.sixel"))
   end
 end
 
