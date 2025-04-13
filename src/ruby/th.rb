@@ -179,6 +179,8 @@ class TreasureHunt
       Welcome to TreasureHunt game on IRB.
       You can use many IRB features for exploring treasure.
 
+      #{JS.global[:gameImage].to_s}
+
       There are many useful IRB commands:
         #{bold "help"} Shows IRB commands.
         #{bold "ls"} Shows methods, constatns and variables in current workspace.

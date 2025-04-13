@@ -5,6 +5,7 @@
     "@ruby/3.4-wasm-wasi": "^2.7.1",
     "@ruby/wasm-wasi": "^2.7.1",
     "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-image": "^0.8.0",
     "@xterm/addon-web-links": "^0.11.0",
     "@xterm/xterm": "^5.3.0",
     "jquery.terminal": "^2.31.1",

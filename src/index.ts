@@ -4,6 +4,7 @@ import { makeJQueryTerminal } from "./terminals/jquery-terminal"
 import { makeXTermTerminal } from "./terminals/xterm";
 import { makeXtermPtyTerminal } from "./terminals/xterm-pty";
 import irb_3_4_wasm from "../node_modules/@ruby/3.4-wasm-wasi/dist/ruby.debug+stdlib.wasm?url";
+import gameSixelImage from "./images/game.sixel";
 
 function makeTerminal(rubyVersion: string) {
     const query = new URLSearchParams(window.location.search);
@@ -58,6 +59,13 @@ async function init() {
     window.termEchoRaw = (str: string) => {
         term.write(str);
     }
+
+    await fetch(gameSixelImage)
+        .then(response => response.text())
+        .then(text => {
+            // @ts-ignore
+            window.gameImage = text;
+        });
 
     await irbWorker.init(term, currentRubyVersion)
 

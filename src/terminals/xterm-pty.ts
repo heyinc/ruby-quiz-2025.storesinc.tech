@@ -1,6 +1,7 @@
 import { Term } from "./terminal";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
+import { ImageAddon } from '@xterm/addon-image';
 import { WebLinksAddon } from "@xterm/addon-web-links";
 import { openpty } from "xterm-pty";
 
@@ -22,6 +23,7 @@ const setupTerminal = () => {
     fitAddon.fit();
 
     xterm.loadAddon(new WebLinksAddon());
+    xterm.loadAddon(new ImageAddon());
 
     return slave;
 }
