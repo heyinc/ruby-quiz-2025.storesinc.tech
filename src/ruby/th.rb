@@ -222,6 +222,15 @@ class TreasureHunt
       treasures.each do |treasure|
         puts "- #{bold treasure}"
       end
+
+      if treasures.size == TreasureHunt::TREASURE_DIGESTS.size
+        puts font(:yellow, <<~EOM.chomp)
+        Congratulations!
+        You have found all the treasures hidden in the world and are closer to the wisdom of the ancients.
+
+        For more knowledge, please wait for the next TreasureHunt game update.
+        EOM
+      end
     end
   end
 end
