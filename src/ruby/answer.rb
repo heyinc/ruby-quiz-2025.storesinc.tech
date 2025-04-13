@@ -14,7 +14,7 @@ ANSWERS = %w[
   RE-🐾💎🐾
   IR-HISTORY
   KE-CP290
-  AA-STORES!
+  PT-INGT
 ]
 
 puts "Answers:"

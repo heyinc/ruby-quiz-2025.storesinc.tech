@@ -24,6 +24,10 @@ def wasm?
   RUBY_PLATFORM.start_with?("wasm")
 end
 
+def load_image(name)
+  wasm? ? JS.global[:gameImages][name].to_s : File.read(File.join(File.dirname(__dir__), "images", "#{name}.sixel"))
+end
+
 class TreasureHunt
   include Singleton
 
@@ -164,7 +168,7 @@ class TreasureHunt
     f7f9e259a5f212e12a69de3f38094aaf0179663f77e024acedbea7c2f224ce00
     939ef55a8e99c91231e1de13a7438506f7a4a1c060c9e75252bf0ba825d7db94
     a16071242afb8a9debadd51432e44ec310cceaadf4aac50d1bc7b73c89f82295
-    dc75587f056351b4e9f65f7a645b2226729df118ae2408cf54bb19d862609969
+    48436f8948916c1a330f20c90f0f7b1c5dd8e8b30f2d4ba567d8929cb17f841c
   ]
 
   attr_accessor :hint_count
@@ -179,7 +183,7 @@ class TreasureHunt
       Welcome to TreasureHunt game on IRB.
       You can use many IRB features for exploring treasure.
 
-      #{load_game_image}
+      #{ load_image("game") }
 
       There are many useful IRB commands:
         #{bold "help"} Shows IRB commands.
@@ -416,34 +420,11 @@ File.write(irbrc, <<~RUBY)
   IRB.conf[:INSPECT_MODE] = :th
 RUBY
 
-class << File
-  RUBY_LOGO_AA = File.join(File.dirname($LOADED_FEATURES.select { _1.include?("easter-egg.rb") }[0]), "ruby_logo.aa")
-  alias_method :original_read, :read
-
-  def read(*args, **kwargs)
-    if args[0] == RUBY_LOGO_AA
-      <<EOM
-TYPE: UNICODE_LARGE
-
-      ▄▄        ▄▄                 ▄▄▄▄    ▄▄▄▄▄▄▄▄    ▄▄▄▄    ▄▄▄▄▄▄    ▄▄▄▄▄▄▄▄    ▄▄▄▄       ▄▄
-     ████      ████              ▄█▀▀▀▀█   ▀▀▀██▀▀▀   ██▀▀██   ██▀▀▀▀██  ██▀▀▀▀▀▀  ▄█▀▀▀▀█      ██
-     ████      ████              ██▄          ██     ██    ██  ██    ██  ██        ██▄          ██
-    ██  ██    ██  ██              ▀████▄      ██     ██    ██  ███████   ███████    ▀████▄      ██
-    ██████    ██████    █████         ▀██     ██     ██    ██  ██  ▀██▄  ██             ▀██     ▀▀
-   ▄██  ██▄  ▄██  ██▄            █▄▄▄▄▄█▀     ██      ██▄▄██   ██    ██  ██▄▄▄▄▄▄  █▄▄▄▄▄█▀     ▄▄
-   ▀▀    ▀▀  ▀▀    ▀▀             ▀▀▀▀▀       ▀▀       ▀▀▀▀    ▀▀    ▀▀▀ ▀▀▀▀▀▀▀▀   ▀▀▀▀▀       ▀▀
-EOM
-    else
-      original_read(*args, **kwargs)
-    end
-  end
-end
-
 module IRB
   class << self
     alias_method :original_easter_egg, :easter_egg
     private def easter_egg(_type=nil)
-      original_easter_egg(:logo)
+      puts load_image("ingt")
     end
   end
 end
