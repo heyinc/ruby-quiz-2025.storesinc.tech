@@ -41,7 +41,7 @@ export class IRB {
         const buffer = await this.fetchWithProgress(rubyVersion.url, "Downloading irb.wasm", termWriter);
 
         const args = [
-            "irb.wasm", "-e_=0", "-EUTF-8", "-I/gems/lib"
+            "irb.wasm", "--parser=parse.y", "-e_=0", "-EUTF-8", "-I/gems/lib"
         ];
         termWriter.set_prompt("");
 
