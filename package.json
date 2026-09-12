@@ -8,13 +8,13 @@
     "@xterm/addon-image": "^0.8.0",
     "@xterm/addon-web-links": "^0.11.0",
     "@xterm/xterm": "^5.3.0",
-    "jquery.terminal": "^2.31.1",
+    "jquery.terminal": "^2.47.0",
     "xterm-pty": "^0.11.1"
   },
   "devDependencies": {
     "buffer": "^6.0.3",
     "process": "^0.11.10",
-    "vite": "^6.2.4"
+    "vite": "^6.4.3"
   },
   "scripts": {
     "dev": "vite",
